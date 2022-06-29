@@ -4,15 +4,9 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 
-COPY src/package.json package.json
-COPY src/pnpm-lock.yaml pnpm-lock.yaml
-COPY src/.npmrc .npmrc
-
-RUN pnpm install
-
 COPY src .
 
-RUN pnpm build
+RUN [ ! -f dist ] && pnpm install && pnpm build
 
 # =============================================================================
 FROM nginx:alpine as final
