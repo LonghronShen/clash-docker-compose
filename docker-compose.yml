@@ -1,0 +1,20 @@
+version: "2"
+services:
+    clash:
+        image: dreamacro/clash:latest
+        restart: always
+        command: -d /clash
+        volumes:
+            - ./config:/clash
+        ports:
+            - "9090:9090"
+            - "7890:7890"
+    clash-dashboard:
+        image: clash-dashboard:latest
+        build:
+            context: clash-dashboard
+        restart: always
+        ports:
+            - "80:80"
+        depends_on:
+            - clash
